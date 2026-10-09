@@ -4,7 +4,7 @@ Medallion (Bronze / Silver / Gold) pipeline that turns six months of raw CSV
 exports from five source systems (PointClickCare, Yardi, ADP, Google Business
 Profile, HubSpot) into a star-schema warehouse ready for Power BI.
 
-**Walkthrough video:** _[link goes here — record and paste before submitting]_
+**Walkthrough video:** [watch here (Google Drive)](https://drive.google.com/file/d/1s3Xg1D4IcgBmxArxMSkG5sdZECOdPW8R/view?usp=sharing)
 
 ```
 pipeline/        Python ingestion code (Bronze -> Silver -> Gold -> Parquet export)
