@@ -1,0 +1,70 @@
+table fact_incident
+	lineageTag: 017861ca-2379-432b-b0f0-6c186eab1c30
+
+	measure Incidents = COUNTROWS(fact_incident)
+		formatString: #,0
+		lineageTag: 1d5a6e9a-a060-496f-9c41-f853115d4f04
+
+	measure 'Incident Rate per 100 Resident-Days' = DIVIDE(COUNTROWS(fact_incident), SUM(fact_resident_month[resident_days])) * 100
+		formatString: 0.00
+		lineageTag: 2b00291e-a236-4c95-ab8c-59004694ce78
+
+	column incident_id
+		dataType: string
+		lineageTag: 509bb87d-0c34-433e-984f-8a36e5375a64
+		summarizeBy: none
+		sourceColumn: incident_id
+
+	column incident_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 24832bee-4b41-45ad-bcd1-79516b60f3c4
+		summarizeBy: none
+		sourceColumn: incident_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column resident_id
+		dataType: string
+		lineageTag: 961c1f85-a78e-4677-bc83-dec421867cb4
+		summarizeBy: none
+		sourceColumn: resident_id
+
+	column community_id
+		dataType: string
+		lineageTag: 1d569a89-339f-46c1-8a76-f00ef3ba1be8
+		summarizeBy: none
+		sourceColumn: community_id
+
+	column care_level_code
+		dataType: string
+		lineageTag: 293d5a0c-e7c4-4d73-9fca-cafbac68f391
+		summarizeBy: none
+		sourceColumn: care_level_code
+
+	column incident_type
+		dataType: string
+		lineageTag: 1ea9078e-aad4-4c23-a6be-ba014678af6e
+		summarizeBy: none
+		sourceColumn: incident_type
+
+	column severity
+		dataType: int64
+		lineageTag: 2eea6254-be23-462c-ac8f-a14847eddcdd
+		summarizeBy: none
+		sourceColumn: severity
+
+	column reported_by
+		dataType: string
+		lineageTag: cf8f93a8-4e1c-4af6-8039-90ad978959d9
+		summarizeBy: none
+		sourceColumn: reported_by
+
+	partition fact_incident = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "fact_incident.parquet"))
+				in
+				    Source
+

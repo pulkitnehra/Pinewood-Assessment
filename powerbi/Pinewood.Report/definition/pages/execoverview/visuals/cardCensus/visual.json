@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "cardCensus",
+  "position": {
+    "x": 250,
+    "y": 10,
+    "z": 0,
+    "width": 230,
+    "height": 110
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_resident_month"
+                    }
+                  },
+                  "Property": "Current Census"
+                }
+              },
+              "queryRef": "fact_resident_month.Current Census",
+              "nativeQueryRef": "Current Census"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

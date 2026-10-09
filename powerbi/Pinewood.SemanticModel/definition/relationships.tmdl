@@ -1,0 +1,122 @@
+relationship rel-frm-community
+	fromColumn: fact_resident_month.community_id
+	toColumn: dim_community.community_id
+
+relationship rel-frm-resident
+	fromColumn: fact_resident_month.resident_id
+	toColumn: dim_resident.resident_id
+
+relationship rel-frm-carelevel
+	fromColumn: fact_resident_month.care_level_code
+	toColumn: dim_care_level.care_level_code
+
+relationship rel-frm-date
+	fromColumn: fact_resident_month.month_start
+	toColumn: dim_date.date_key
+
+relationship rel-inc-community
+	fromColumn: fact_incident.community_id
+	toColumn: dim_community.community_id
+
+relationship rel-inc-resident
+	fromColumn: fact_incident.resident_id
+	toColumn: dim_resident.resident_id
+
+relationship rel-inc-carelevel
+	fromColumn: fact_incident.care_level_code
+	toColumn: dim_care_level.care_level_code
+
+relationship rel-inc-date
+	fromColumn: fact_incident.incident_date
+	toColumn: dim_date.date_key
+
+relationship rel-lease-community
+	fromColumn: fact_lease.community_id
+	toColumn: dim_community.community_id
+
+relationship rel-lease-resident
+	fromColumn: fact_lease.resident_id
+	toColumn: dim_resident.resident_id
+
+relationship rel-lease-unit
+	fromColumn: fact_lease.unit_id
+	toColumn: dim_unit.unit_id
+
+relationship rel-lease-moveout-date
+	fromColumn: fact_lease.move_out_date
+	toColumn: dim_date.date_key
+
+relationship rel-lease-movein-date
+	isActive: false
+	fromColumn: fact_lease.move_in_date
+	toColumn: dim_date.date_key
+
+relationship rel-shift-community
+	fromColumn: fact_shift.community_id
+	toColumn: dim_community.community_id
+
+relationship rel-shift-date
+	fromColumn: fact_shift.shift_date
+	toColumn: dim_date.date_key
+
+relationship rel-review-community
+	fromColumn: fact_review.community_id
+	toColumn: dim_community.community_id
+
+relationship rel-review-date
+	fromColumn: fact_review.review_date
+	toColumn: dim_date.date_key
+
+relationship rel-lead-community
+	fromColumn: fact_lead.community_id
+	toColumn: dim_community.community_id
+
+relationship rel-lead-date
+	fromColumn: fact_lead.created_date
+	toColumn: dim_date.date_key
+
+relationship rel-occ-community
+	fromColumn: fact_occupancy_month.community_id
+	toColumn: dim_community.community_id
+
+relationship rel-occ-date
+	fromColumn: fact_occupancy_month.month_start
+	toColumn: dim_date.date_key
+
+relationship rel-clc-resident
+	fromColumn: fact_care_level_change.resident_id
+	toColumn: dim_resident.resident_id
+
+relationship rel-clc-date
+	fromColumn: fact_care_level_change.change_date
+	toColumn: dim_date.date_key
+
+relationship rel-clc-carelevel
+	fromColumn: fact_care_level_change.new_level_code
+	toColumn: dim_care_level.care_level_code
+
+relationship rel-unit-community
+	isActive: false
+	fromColumn: dim_unit.community_id
+	toColumn: dim_community.community_id
+
+relationship 6c9783a5-582d-40a9-8552-954f5736381d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_resident.dob
+	toColumn: LocalDateTable_96b780a6-1985-4109-a197-b1aa17362e04.Date
+
+relationship 7031f9d8-804a-44a7-9120-ef5c651c2b74
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_lead.tour_date
+	toColumn: LocalDateTable_a5583fa8-2465-4f3a-8361-084707997fb8.Date
+
+relationship 374eacd4-bcf6-491f-989d-debfbf209535
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_lead.deposit_date
+	toColumn: LocalDateTable_1470bd4b-68a7-4086-aa6e-adb3429b9d25.Date
+
+relationship b1435663-0a69-4073-86b0-694a922ec1b5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_lead.move_in_date
+	toColumn: LocalDateTable_e10b5b03-dc51-4187-a794-c29aadf47267.Date
+

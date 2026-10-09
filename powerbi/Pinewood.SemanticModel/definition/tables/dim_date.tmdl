@@ -1,0 +1,79 @@
+table dim_date
+	lineageTag: 6b0bbdb7-80db-4b72-a06d-bfc1eed1aace
+	dataCategory: Time
+
+	column date_key
+		dataType: dateTime
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: c4623513-1900-4ef1-b2cf-fb66b4bb21d8
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		lineageTag: 9f86033a-c488-4232-a9f0-214c4243bc31
+		summarizeBy: none
+		sourceColumn: year
+
+	column quarter
+		dataType: int64
+		lineageTag: bd39ce09-9620-4099-8f69-166f4e9bfc04
+		summarizeBy: none
+		sourceColumn: quarter
+
+	column month
+		dataType: int64
+		lineageTag: 07903acb-4977-4619-8bb9-a89cd99345a2
+		summarizeBy: none
+		sourceColumn: month
+
+	column month_name
+		dataType: string
+		lineageTag: 3d307f9d-3572-4e9c-95ca-ed008411cb4c
+		summarizeBy: none
+		sourceColumn: month_name
+
+	column month_start
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: a2f5e132-cfb5-4778-aae1-b7d00b46d59f
+		summarizeBy: none
+		sourceColumn: month_start
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column day_of_month
+		dataType: int64
+		lineageTag: c72a0bda-621c-486f-93db-60dec8eb7bf9
+		summarizeBy: none
+		sourceColumn: day_of_month
+
+	column day_name
+		dataType: string
+		lineageTag: a0e9d211-1be6-4310-b14c-ab5203b80b60
+		summarizeBy: none
+		sourceColumn: day_name
+
+	column iso_week
+		dataType: int64
+		lineageTag: dd2b621d-8497-4610-b9ee-f2b0238a3251
+		summarizeBy: none
+		sourceColumn: iso_week
+
+	column is_weekend
+		dataType: boolean
+		lineageTag: bcce7ac6-73f1-4f45-9ba3-97515c0a37f7
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "dim_date.parquet"))
+				in
+				    Source
+

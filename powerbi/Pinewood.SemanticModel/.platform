@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Pinewood"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3f6b1c2d-8a94-4e07-b1a5-0c9d2e7f4a61"
+  }
+}

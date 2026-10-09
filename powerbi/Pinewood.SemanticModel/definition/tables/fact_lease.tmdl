@@ -1,0 +1,91 @@
+table fact_lease
+	lineageTag: 7294024c-53ac-465d-9543-56b0eb73fa7d
+
+	measure Move-Outs = CALCULATE(COUNTROWS(fact_lease), fact_lease[move_out_date] <> BLANK())
+		formatString: #,0
+		lineageTag: 25288241-75aa-4199-9044-903e9d0aa46b
+
+	measure 'Move-Out Rate % (Trailing 90D)' =
+			VAR WindowEnd =
+			    CALCULATE(EOMONTH(MAX(fact_resident_month[month_start]), 0), REMOVEFILTERS())
+			VAR WindowStart = WindowEnd - 89
+			VAR MoveOuts90 =
+			    CALCULATE(
+			        COUNTROWS(fact_lease),
+			        REMOVEFILTERS(dim_date),
+			        fact_lease[move_out_date] >= WindowStart,
+			        fact_lease[move_out_date] <= WindowEnd
+			    )
+			VAR ResidentsInWindow =
+			    CALCULATE(
+			        DISTINCTCOUNT(fact_resident_month[resident_id]),
+			        REMOVEFILTERS(dim_date),
+			        fact_resident_month[month_start] >= DATE(YEAR(WindowStart), MONTH(WindowStart), 1)
+			    )
+			RETURN
+			    DIVIDE(MoveOuts90, ResidentsInWindow)
+		formatString: 0.0%
+		lineageTag: 93f1d407-f4be-45d3-a5ff-038a4bcf27bb
+
+	column lease_id
+		dataType: string
+		lineageTag: db338a72-7020-4d2a-a06f-2339d4b340f6
+		summarizeBy: none
+		sourceColumn: lease_id
+
+	column resident_id
+		dataType: string
+		lineageTag: 79781ac4-b718-4a89-aae7-93f3a90ebe53
+		summarizeBy: none
+		sourceColumn: resident_id
+
+	column unit_id
+		dataType: string
+		lineageTag: 7b64cb67-c946-4a88-9390-4b205ec35d29
+		summarizeBy: none
+		sourceColumn: unit_id
+
+	column community_id
+		dataType: string
+		lineageTag: bd4528cc-c54a-4a33-82d5-f598b8af4ac3
+		summarizeBy: none
+		sourceColumn: community_id
+
+	column move_in_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 8ded1a91-8ddc-4e57-8836-941d9c63caeb
+		summarizeBy: none
+		sourceColumn: move_in_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column move_out_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 1321d8af-beec-4de7-96c8-c9ae84006c92
+		summarizeBy: none
+		sourceColumn: move_out_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column move_out_reason
+		dataType: string
+		lineageTag: 7408af48-2657-4d5c-8084-b28d96592cd0
+		summarizeBy: none
+		sourceColumn: move_out_reason
+
+	column monthly_rate
+		dataType: double
+		lineageTag: 650c9dec-650e-4161-a63c-4eb335c438b6
+		summarizeBy: none
+		sourceColumn: monthly_rate
+
+	partition fact_lease = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "fact_lease.parquet"))
+				in
+				    Source
+

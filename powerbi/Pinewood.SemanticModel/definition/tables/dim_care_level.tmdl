@@ -1,0 +1,29 @@
+table dim_care_level
+	lineageTag: ce4fe9c0-b850-4bd9-aa49-d7542e64e1b1
+
+	column care_level_code
+		dataType: string
+		lineageTag: a9196d0b-70e7-4ce9-9dbe-32ffcd64fe18
+		summarizeBy: none
+		sourceColumn: care_level_code
+
+	column care_level_name
+		dataType: string
+		lineageTag: a1c48fbb-7d85-4806-9f0e-7911eaab72e2
+		summarizeBy: none
+		sourceColumn: care_level_name
+
+	column sort_order
+		dataType: int64
+		lineageTag: 73f49567-efc2-4edf-826b-79792f31010f
+		summarizeBy: none
+		sourceColumn: sort_order
+
+	partition dim_care_level = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "dim_care_level.parquet"))
+				in
+				    Source
+

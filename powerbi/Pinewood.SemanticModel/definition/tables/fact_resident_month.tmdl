@@ -1,0 +1,70 @@
+table fact_resident_month
+	lineageTag: 77260790-3afe-473f-922a-75e57880bd7f
+
+	measure 'Census (Active Residents)' = DISTINCTCOUNT(fact_resident_month[resident_id])
+		formatString: #,0
+		lineageTag: 7b19c49c-d840-4ca9-a571-79ccec46696f
+
+	measure 'Current Census' =
+			VAR LatestMonth =
+			    CALCULATE(MAX(fact_resident_month[month_start]), REMOVEFILTERS())
+			RETURN
+			    CALCULATE(
+			        DISTINCTCOUNT(fact_resident_month[resident_id]),
+			        REMOVEFILTERS(dim_date),
+			        fact_resident_month[month_start] = LatestMonth
+			    )
+		formatString: #,0
+		lineageTag: 97c1504b-0c31-4f3a-aca9-3865f2500ac7
+
+	measure 'Resident Days' = SUM(fact_resident_month[resident_days])
+		formatString: #,0
+		lineageTag: 22550949-f9ed-4cc0-906e-50585b84fe70
+
+	column resident_id
+		dataType: string
+		lineageTag: 44c9b538-1707-4ad4-a56d-07907cb37dc1
+		summarizeBy: none
+		sourceColumn: resident_id
+
+	column community_id
+		dataType: string
+		lineageTag: 17f462b5-61c7-4398-ba63-20dc9f744bd3
+		summarizeBy: none
+		sourceColumn: community_id
+
+	column care_level_code
+		dataType: string
+		lineageTag: 329eb8e8-69d5-4160-89f2-f7640cf5f5b0
+		summarizeBy: none
+		sourceColumn: care_level_code
+
+	column month_start
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 68311eef-f8d8-453f-bb50-1f5b9e8f610f
+		summarizeBy: none
+		sourceColumn: month_start
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column resident_days
+		dataType: int64
+		lineageTag: 18096936-4a84-4eda-8452-4f5a7030e93a
+		summarizeBy: none
+		sourceColumn: resident_days
+
+	column acuity_score
+		dataType: int64
+		lineageTag: d6aa2512-eb6f-4756-b631-b14079edd4e7
+		summarizeBy: none
+		sourceColumn: acuity_score
+
+	partition fact_resident_month = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "fact_resident_month.parquet"))
+				in
+				    Source
+

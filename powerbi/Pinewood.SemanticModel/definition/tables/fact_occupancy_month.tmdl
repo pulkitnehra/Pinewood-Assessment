@@ -1,0 +1,74 @@
+table fact_occupancy_month
+	lineageTag: 301a0749-5418-46e7-8005-f1b29eec7332
+
+	measure 'Occupancy %' = DIVIDE(SUM(fact_occupancy_month[resident_days]), SUM(fact_occupancy_month[available_unit_days]))
+		formatString: 0.0%
+		lineageTag: 2b3274be-2453-4f2d-b2bb-65a4949ae6ed
+
+	measure 'Current Occupancy %' =
+			VAR LatestMonth =
+			    CALCULATE(MAX(fact_occupancy_month[month_start]), REMOVEFILTERS())
+			RETURN
+			    CALCULATE(
+			        [Occupancy %],
+			        REMOVEFILTERS(dim_date),
+			        fact_occupancy_month[month_start] = LatestMonth
+			    )
+		formatString: 0.0%
+		lineageTag: 1130ad1e-c2e2-4fa2-9e6d-096c2f94679a
+
+	measure 'Occupancy % Prior Month' = CALCULATE([Occupancy %], DATEADD(dim_date[date_key], -1, MONTH))
+		formatString: 0.0%
+		lineageTag: 2fd5e0a6-f56f-4b7c-a633-9c9fc6b8fb09
+
+	measure 'Occupancy % MoM Delta' = [Occupancy %] - [Occupancy % Prior Month]
+		formatString: +0.0%;-0.0%;0.0%
+		lineageTag: de850acc-bed8-47e7-84fa-40c3e9289adc
+
+	column community_id
+		dataType: string
+		lineageTag: 163e51f5-fa8d-4385-95ef-43719baad504
+		summarizeBy: none
+		sourceColumn: community_id
+
+	column month_start
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 9b6167d5-217f-4017-afa6-6c44cad0058e
+		summarizeBy: none
+		sourceColumn: month_start
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total_units
+		dataType: int64
+		lineageTag: 7e4dd937-7747-4135-bf98-d62230fd4dca
+		summarizeBy: none
+		sourceColumn: total_units
+
+	column available_unit_days
+		dataType: int64
+		lineageTag: c12ee40e-6269-4244-ab52-76d5fdb018d4
+		summarizeBy: none
+		sourceColumn: available_unit_days
+
+	column resident_days
+		dataType: int64
+		lineageTag: 1da9f600-f58a-4962-a5bf-3a77805cae6e
+		summarizeBy: none
+		sourceColumn: resident_days
+
+	column occupancy_pct
+		dataType: double
+		lineageTag: 5d6fdc8c-f6e4-485c-8475-b20a474636b2
+		summarizeBy: none
+		sourceColumn: occupancy_pct
+
+	partition fact_occupancy_month = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "fact_occupancy_month.parquet"))
+				in
+				    Source
+

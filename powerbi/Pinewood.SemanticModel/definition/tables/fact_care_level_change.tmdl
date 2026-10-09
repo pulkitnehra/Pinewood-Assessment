@@ -1,0 +1,44 @@
+table fact_care_level_change
+	lineageTag: 13f56fda-ebd2-446d-b614-6285b9da5522
+
+	column resident_id
+		dataType: string
+		lineageTag: 0ba0fed6-4491-48f3-aac4-bb7603b1b760
+		summarizeBy: none
+		sourceColumn: resident_id
+
+	column change_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 9af06fba-c4a9-430f-afc1-f50fa97aae3e
+		summarizeBy: none
+		sourceColumn: change_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column previous_level_code
+		dataType: string
+		lineageTag: 7a531a96-d0b8-49cc-8da2-57b8f30ff381
+		summarizeBy: none
+		sourceColumn: previous_level_code
+
+	column new_level_code
+		dataType: string
+		lineageTag: 7734f244-697c-45ba-aeac-4ab9f80130e1
+		summarizeBy: none
+		sourceColumn: new_level_code
+
+	column reason
+		dataType: string
+		lineageTag: 6ec3daa8-c708-4405-bf70-6b0f6a71f8e0
+		summarizeBy: none
+		sourceColumn: reason
+
+	partition fact_care_level_change = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "fact_care_level_change.parquet"))
+				in
+				    Source
+

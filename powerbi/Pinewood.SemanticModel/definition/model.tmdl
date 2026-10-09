@@ -1,0 +1,36 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dim_care_level","dim_community","dim_date","dim_resident","dim_unit","fact_care_level_change","fact_incident","fact_lead","fact_lease","fact_occupancy_month","fact_resident_month","fact_review","fact_shift","GoldFolder"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_care_level
+ref table dim_community
+ref table dim_date
+ref table dim_resident
+ref table dim_unit
+ref table fact_care_level_change
+ref table fact_incident
+ref table fact_lead
+ref table fact_lease
+ref table fact_occupancy_month
+ref table fact_resident_month
+ref table fact_review
+ref table fact_shift
+ref table DateTableTemplate_f0864140-04cf-478b-b4a8-e441407738b6
+ref table LocalDateTable_96b780a6-1985-4109-a197-b1aa17362e04
+ref table LocalDateTable_a5583fa8-2465-4f3a-8361-084707997fb8
+ref table LocalDateTable_1470bd4b-68a7-4086-aa6e-adb3429b9d25
+ref table LocalDateTable_e10b5b03-dc51-4187-a794-c29aadf47267
+
+ref role 'Regional Director'
+ref role 'Community Executive Director'
+

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "cardIncidentRate",
+  "position": {
+    "x": 490,
+    "y": 10,
+    "z": 0,
+    "width": 230,
+    "height": 110
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_incident"
+                    }
+                  },
+                  "Property": "Incident Rate per 100 Resident-Days"
+                }
+              },
+              "queryRef": "fact_incident.Incident Rate per 100 Resident-Days",
+              "nativeQueryRef": "Incident Rate per 100 Resident-Days"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "barMoveOutReasons",
+  "position": {
+    "x": 10,
+    "y": 420,
+    "z": 0,
+    "height": 290,
+    "width": 620
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_lease"
+                    }
+                  },
+                  "Property": "move_out_reason"
+                }
+              },
+              "queryRef": "fact_lease.move_out_reason",
+              "nativeQueryRef": "move_out_reason",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_lease"
+                    }
+                  },
+                  "Property": "Move-Outs"
+                }
+              },
+              "queryRef": "fact_lease.Move-Outs",
+              "nativeQueryRef": "Move-Outs"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

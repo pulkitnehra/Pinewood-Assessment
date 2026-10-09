@@ -1,0 +1,55 @@
+table dim_resident
+	lineageTag: f6583725-02a4-46dd-86ad-3e8079133345
+
+	column resident_id
+		dataType: string
+		lineageTag: b5daabb4-663f-48e0-9761-fd770f6d5985
+		summarizeBy: none
+		sourceColumn: resident_id
+
+	column first_name
+		dataType: string
+		lineageTag: 1229366b-00f8-4bca-a501-8f92e651b2d4
+		summarizeBy: none
+		sourceColumn: first_name
+
+	column last_name
+		dataType: string
+		lineageTag: c629ebe1-2474-4221-89d4-1b263c5a9593
+		summarizeBy: none
+		sourceColumn: last_name
+
+	column full_name
+		dataType: string
+		lineageTag: dc9f7249-cb78-4312-8166-5b1932e30c03
+		summarizeBy: none
+		sourceColumn: full_name
+
+	column dob
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 04ecc472-3aab-487b-81dd-4e1d2f239b3d
+		summarizeBy: none
+		sourceColumn: dob
+
+		variation Variation
+			isDefault
+			relationship: 6c9783a5-582d-40a9-8552-954f5736381d
+			defaultHierarchy: LocalDateTable_96b780a6-1985-4109-a197-b1aa17362e04.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column gender
+		dataType: string
+		lineageTag: 448ec1c7-c70e-45b1-9d36-c6de65193120
+		summarizeBy: none
+		sourceColumn: gender
+
+	partition dim_resident = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "dim_resident.parquet"))
+				in
+				    Source
+

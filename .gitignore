@@ -1,0 +1,10 @@
+warehouse/
+__pycache__/
+*.pyc
+
+# Power BI local state (not part of the source-controlled PBIP definition)
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# personal recording prep, not part of the submission
+WALKTHROUGH_NOTES.md

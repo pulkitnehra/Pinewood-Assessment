@@ -1,0 +1,100 @@
+table fact_lead
+	lineageTag: bdf47b44-2fed-46b1-afd9-694eedc042b7
+
+	measure Leads = COUNTROWS(fact_lead)
+		formatString: #,0
+		lineageTag: b13876c1-963a-49c7-a113-c3f0a276e1bf
+
+	measure 'Lead Conversion %' = DIVIDE(CALCULATE(COUNTROWS(fact_lead), fact_lead[status] = "Won"), COUNTROWS(fact_lead))
+		formatString: 0.0%
+		lineageTag: 5e16aa5d-aa46-4369-83b4-e90b4d42325b
+
+	column lead_id
+		dataType: string
+		lineageTag: 1d34a8e2-15d1-4179-bac0-3e61f58e616e
+		summarizeBy: none
+		sourceColumn: lead_id
+
+	column created_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 2fdeaea8-26b9-432d-8477-dec7a19e13ef
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column community_id
+		dataType: string
+		lineageTag: e8b4323b-1915-4c13-bdcb-e0a90e1b6f5d
+		summarizeBy: none
+		sourceColumn: community_id
+
+	column lead_source
+		dataType: string
+		lineageTag: 863f302e-c004-4cd5-b937-992fabe1972c
+		summarizeBy: none
+		sourceColumn: lead_source
+
+	column tour_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: ab55959c-f8cf-4016-9dae-0de6f7d60c46
+		summarizeBy: none
+		sourceColumn: tour_date
+
+		variation Variation
+			isDefault
+			relationship: 7031f9d8-804a-44a7-9120-ef5c651c2b74
+			defaultHierarchy: LocalDateTable_a5583fa8-2465-4f3a-8361-084707997fb8.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column deposit_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 6842219f-dd0b-4315-917e-c949746637c6
+		summarizeBy: none
+		sourceColumn: deposit_date
+
+		variation Variation
+			isDefault
+			relationship: 374eacd4-bcf6-491f-989d-debfbf209535
+			defaultHierarchy: LocalDateTable_1470bd4b-68a7-4086-aa6e-adb3429b9d25.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column move_in_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: e8b03506-5bc6-4bb3-ae4a-e334b77061ee
+		summarizeBy: none
+		sourceColumn: move_in_date
+
+		variation Variation
+			isDefault
+			relationship: b1435663-0a69-4073-86b0-694a922ec1b5
+			defaultHierarchy: LocalDateTable_e10b5b03-dc51-4187-a794-c29aadf47267.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status
+		dataType: string
+		lineageTag: d86ac888-1b68-490b-a3b2-5fcde42caed5
+		summarizeBy: none
+		sourceColumn: status
+
+	column lost_reason
+		dataType: string
+		lineageTag: 7c774383-7ef3-4ebb-a822-b7da9dbca68e
+		summarizeBy: none
+		sourceColumn: lost_reason
+
+	partition fact_lead = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "fact_lead.parquet"))
+				in
+				    Source
+

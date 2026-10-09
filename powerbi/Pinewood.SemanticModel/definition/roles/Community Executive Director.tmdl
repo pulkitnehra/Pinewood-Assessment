@@ -1,0 +1,10 @@
+/// Community Executive Director: sees only their own community.
+/// Static example community C001 for "View As" testing; production would be
+/// dynamic RLS against a user-to-community mapping table.
+role 'Community Executive Director'
+	modelPermission: read
+
+	tablePermission dim_community = dim_community[community_id] = "C001"
+
+	annotation PBI_Id = 02dba55ef7f04f93a70d18a447b7bdf1
+

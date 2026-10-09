@@ -1,0 +1,12 @@
+/// Regional Director: sees only the communities in their region.
+/// Regions are defined by state (OR = Pacific Northwest, AZ = Southwest,
+/// TX = South). This role uses a static example region so it can be tested
+/// with "View As" in Power BI Desktop; in production this would be one role
+/// per region, or dynamic RLS against a user-to-region mapping table.
+role 'Regional Director'
+	modelPermission: read
+
+	tablePermission dim_community = dim_community[region] = "Pacific Northwest"
+
+	annotation PBI_Id = 8ade700f33f74926bf264fab939a2f78
+

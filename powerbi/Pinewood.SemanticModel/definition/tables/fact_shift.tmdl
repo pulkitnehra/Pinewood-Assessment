@@ -1,0 +1,70 @@
+table fact_shift
+	lineageTag: dde3d822-5de2-48f4-9c7f-1cec6b388257
+
+	measure 'Labor Hours' = SUM(fact_shift[hours_worked])
+		formatString: #,0
+		lineageTag: fecedb17-c2a0-43b4-aa66-927d25bc1884
+
+	measure 'Labor Cost' = SUM(fact_shift[labor_cost])
+		formatString: \$#,0
+		lineageTag: f2c4e12f-ae36-40e1-a25e-ac9567167bab
+
+	column shift_id
+		dataType: string
+		lineageTag: 1e3e684d-44db-4a32-82b1-95ba76acc868
+		summarizeBy: none
+		sourceColumn: shift_id
+
+	column shift_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: bdb513ad-b9ae-43f4-8526-b459247e44ac
+		summarizeBy: none
+		sourceColumn: shift_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column community_id
+		dataType: string
+		lineageTag: 2ea5f27e-0453-4e83-85e4-60ab316b5d8b
+		summarizeBy: none
+		sourceColumn: community_id
+
+	column employee_id
+		dataType: string
+		lineageTag: 0a387d06-a7be-47be-add9-3f2205f8c0d5
+		summarizeBy: none
+		sourceColumn: employee_id
+
+	column role
+		dataType: string
+		lineageTag: 5f9a12cc-c22d-4db7-b7a8-30633e9b1dbf
+		summarizeBy: none
+		sourceColumn: role
+
+	column hours_worked
+		dataType: double
+		lineageTag: 94095e16-ed51-431d-a1cc-5aa8add63446
+		summarizeBy: none
+		sourceColumn: hours_worked
+
+	column hourly_rate
+		dataType: double
+		lineageTag: 17b3f800-3190-48a0-95cc-8348651bb217
+		summarizeBy: none
+		sourceColumn: hourly_rate
+
+	column labor_cost
+		dataType: double
+		lineageTag: b535389a-cfea-4134-97b6-e1be6ad610e7
+		summarizeBy: none
+		sourceColumn: labor_cost
+
+	partition fact_shift = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "fact_shift.parquet"))
+				in
+				    Source
+

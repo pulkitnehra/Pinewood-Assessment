@@ -1,0 +1,35 @@
+table dim_community
+	lineageTag: feb8c148-e3fc-45a2-b55c-128c81548c41
+
+	column community_id
+		dataType: string
+		lineageTag: f40b4925-0156-4ff3-aebd-3a50a2305c6c
+		summarizeBy: none
+		sourceColumn: community_id
+
+	column community_name
+		dataType: string
+		lineageTag: 6c1e6dc8-39bb-436f-b866-e28768d39be0
+		summarizeBy: none
+		sourceColumn: community_name
+
+	column state
+		dataType: string
+		lineageTag: c09e78f4-cca2-4b11-96f6-8226341adc80
+		summarizeBy: none
+		sourceColumn: state
+
+	column region
+		dataType: string
+		lineageTag: 730eea41-cb09-474b-9b32-3f282ff45fc9
+		summarizeBy: none
+		sourceColumn: region
+
+	partition dim_community = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(GoldFolder & "dim_community.parquet"))
+				in
+				    Source
+
