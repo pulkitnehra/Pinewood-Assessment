@@ -1,26 +1,6 @@
 table fact_resident_month
 	lineageTag: 77260790-3afe-473f-922a-75e57880bd7f
 
-	measure 'Census (Active Residents)' = DISTINCTCOUNT(fact_resident_month[resident_id])
-		formatString: #,0
-		lineageTag: 7b19c49c-d840-4ca9-a571-79ccec46696f
-
-	measure 'Current Census' =
-			VAR LatestMonth =
-			    CALCULATE(MAX(fact_resident_month[month_start]), REMOVEFILTERS())
-			RETURN
-			    CALCULATE(
-			        DISTINCTCOUNT(fact_resident_month[resident_id]),
-			        REMOVEFILTERS(dim_date),
-			        fact_resident_month[month_start] = LatestMonth
-			    )
-		formatString: #,0
-		lineageTag: 97c1504b-0c31-4f3a-aca9-3865f2500ac7
-
-	measure 'Resident Days' = SUM(fact_resident_month[resident_days])
-		formatString: #,0
-		lineageTag: 22550949-f9ed-4cc0-906e-50585b84fe70
-
 	column resident_id
 		dataType: string
 		lineageTag: 44c9b538-1707-4ad4-a56d-07907cb37dc1

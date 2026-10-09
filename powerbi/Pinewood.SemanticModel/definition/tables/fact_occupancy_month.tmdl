@@ -1,30 +1,6 @@
 table fact_occupancy_month
 	lineageTag: 301a0749-5418-46e7-8005-f1b29eec7332
 
-	measure 'Occupancy %' = DIVIDE(SUM(fact_occupancy_month[resident_days]), SUM(fact_occupancy_month[available_unit_days]))
-		formatString: 0.0%
-		lineageTag: 2b3274be-2453-4f2d-b2bb-65a4949ae6ed
-
-	measure 'Current Occupancy %' =
-			VAR LatestMonth =
-			    CALCULATE(MAX(fact_occupancy_month[month_start]), REMOVEFILTERS())
-			RETURN
-			    CALCULATE(
-			        [Occupancy %],
-			        REMOVEFILTERS(dim_date),
-			        fact_occupancy_month[month_start] = LatestMonth
-			    )
-		formatString: 0.0%
-		lineageTag: 1130ad1e-c2e2-4fa2-9e6d-096c2f94679a
-
-	measure 'Occupancy % Prior Month' = CALCULATE([Occupancy %], DATEADD(dim_date[date_key], -1, MONTH))
-		formatString: 0.0%
-		lineageTag: 2fd5e0a6-f56f-4b7c-a633-9c9fc6b8fb09
-
-	measure 'Occupancy % MoM Delta' = [Occupancy %] - [Occupancy % Prior Month]
-		formatString: +0.0%;-0.0%;0.0%
-		lineageTag: de850acc-bed8-47e7-84fa-40c3e9289adc
-
 	column community_id
 		dataType: string
 		lineageTag: 163e51f5-fa8d-4385-95ef-43719baad504

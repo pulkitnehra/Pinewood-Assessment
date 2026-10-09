@@ -19,13 +19,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_incident"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Incident Rate per 100 Resident-Days"
                 }
               },
-              "queryRef": "fact_incident.Incident Rate per 100 Resident-Days",
+              "queryRef": "_Measures.Incident Rate per 100 Resident-Days",
               "nativeQueryRef": "Incident Rate per 100 Resident-Days"
             }
           ]

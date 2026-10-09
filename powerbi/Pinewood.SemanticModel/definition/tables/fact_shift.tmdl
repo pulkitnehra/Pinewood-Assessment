@@ -1,14 +1,6 @@
 table fact_shift
 	lineageTag: dde3d822-5de2-48f4-9c7f-1cec6b388257
 
-	measure 'Labor Hours' = SUM(fact_shift[hours_worked])
-		formatString: #,0
-		lineageTag: fecedb17-c2a0-43b4-aa66-927d25bc1884
-
-	measure 'Labor Cost' = SUM(fact_shift[labor_cost])
-		formatString: \$#,0
-		lineageTag: f2c4e12f-ae36-40e1-a25e-ac9567167bab
-
 	column shift_id
 		dataType: string
 		lineageTag: 1e3e684d-44db-4a32-82b1-95ba76acc868

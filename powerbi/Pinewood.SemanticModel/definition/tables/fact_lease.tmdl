@@ -1,32 +1,6 @@
 table fact_lease
 	lineageTag: 7294024c-53ac-465d-9543-56b0eb73fa7d
 
-	measure Move-Outs = CALCULATE(COUNTROWS(fact_lease), fact_lease[move_out_date] <> BLANK())
-		formatString: #,0
-		lineageTag: 25288241-75aa-4199-9044-903e9d0aa46b
-
-	measure 'Move-Out Rate % (Trailing 90D)' =
-			VAR WindowEnd =
-			    CALCULATE(EOMONTH(MAX(fact_resident_month[month_start]), 0), REMOVEFILTERS())
-			VAR WindowStart = WindowEnd - 89
-			VAR MoveOuts90 =
-			    CALCULATE(
-			        COUNTROWS(fact_lease),
-			        REMOVEFILTERS(dim_date),
-			        fact_lease[move_out_date] >= WindowStart,
-			        fact_lease[move_out_date] <= WindowEnd
-			    )
-			VAR ResidentsInWindow =
-			    CALCULATE(
-			        DISTINCTCOUNT(fact_resident_month[resident_id]),
-			        REMOVEFILTERS(dim_date),
-			        fact_resident_month[month_start] >= DATE(YEAR(WindowStart), MONTH(WindowStart), 1)
-			    )
-			RETURN
-			    DIVIDE(MoveOuts90, ResidentsInWindow)
-		formatString: 0.0%
-		lineageTag: 93f1d407-f4be-45d3-a5ff-038a4bcf27bb
-
 	column lease_id
 		dataType: string
 		lineageTag: db338a72-7020-4d2a-a06f-2339d4b340f6

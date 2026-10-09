@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "matrixScorecard",
   "position": {
-    "x": 640.37580739870816,
-    "y": 430.35315829208957,
+    "x": 640.3758073987082,
+    "y": 430.3531582920896,
     "z": 0,
     "height": 290,
     "width": 630
@@ -53,13 +53,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_occupancy_month"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Occupancy %"
                 }
               },
-              "queryRef": "fact_occupancy_month.Occupancy %",
+              "queryRef": "_Measures.Occupancy %",
               "nativeQueryRef": "Occupancy %"
             },
             {
@@ -67,13 +67,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_resident_month"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Census (Active Residents)"
                 }
               },
-              "queryRef": "fact_resident_month.Census (Active Residents)",
+              "queryRef": "_Measures.Census (Active Residents)",
               "nativeQueryRef": "Census (Active Residents)"
             },
             {
@@ -81,13 +81,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_incident"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Incidents"
                 }
               },
-              "queryRef": "fact_incident.Incidents",
+              "queryRef": "_Measures.Incidents",
               "nativeQueryRef": "Incidents"
             },
             {
@@ -95,13 +95,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_lease"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Move-Outs"
                 }
               },
-              "queryRef": "fact_lease.Move-Outs",
+              "queryRef": "_Measures.Move-Outs",
               "nativeQueryRef": "Move-Outs"
             },
             {
@@ -109,13 +109,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_review"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Avg Rating"
                 }
               },
-              "queryRef": "fact_review.Avg Rating",
+              "queryRef": "_Measures.Avg Rating",
               "nativeQueryRef": "Avg Rating"
             },
             {
@@ -123,13 +123,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_shift"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Labor Cost"
                 }
               },
-              "queryRef": "fact_shift.Labor Cost",
+              "queryRef": "_Measures.Labor Cost",
               "nativeQueryRef": "Labor Cost"
             }
           ]

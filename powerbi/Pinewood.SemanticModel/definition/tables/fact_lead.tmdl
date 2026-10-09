@@ -1,14 +1,6 @@
 table fact_lead
 	lineageTag: bdf47b44-2fed-46b1-afd9-694eedc042b7
 
-	measure Leads = COUNTROWS(fact_lead)
-		formatString: #,0
-		lineageTag: b13876c1-963a-49c7-a113-c3f0a276e1bf
-
-	measure 'Lead Conversion %' = DIVIDE(CALCULATE(COUNTROWS(fact_lead), fact_lead[status] = "Won"), COUNTROWS(fact_lead))
-		formatString: 0.0%
-		lineageTag: 5e16aa5d-aa46-4369-83b4-e90b4d42325b
-
 	column lead_id
 		dataType: string
 		lineageTag: 1d34a8e2-15d1-4179-bac0-3e61f58e616e

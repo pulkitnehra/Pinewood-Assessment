@@ -8,7 +8,14 @@ and the DAX measures defined below.
 Run after a schema change in the Gold layer:
     python powerbi/generate_tables.py
 The rest of the semantic model (model.tmdl, relationships.tmdl, roles,
-expressions.tmdl) is hand-maintained and not touched by this script.
+expressions.tmdl, tables/_Measures.tmdl) is hand-maintained and not touched
+by this script.
+
+NOTE: all DAX measures live in the dedicated _Measures table
+(tables/_Measures.tmdl), NOT on the fact tables, so this generator emits
+columns and partitions only. Also note Power BI Desktop enriches the table
+files on save (variations, annotations); regenerating overwrites that, so
+only rerun this after a Gold schema change and re-save from Desktop after.
 """
 
 import uuid
@@ -31,8 +38,9 @@ TYPE_MAP = {
     "BOOLEAN": "boolean",
 }
 
-# Measures live on the fact table they describe. Format: (name, dax, format).
-MEASURES = {
+# Kept for reference only: the authoritative copies of these measures now
+# live in tables/_Measures.tmdl and are no longer emitted into table files.
+_MEASURES_REFERENCE = {
     "fact_occupancy_month": [
         ("Occupancy %",
          "DIVIDE(SUM(fact_occupancy_month[resident_days]), "
@@ -146,9 +154,6 @@ def generate_table(con, table):
     if table == "dim_date":
         lines.append("\tdataCategory: Time")
     lines.append("")
-
-    for name, dax, fmt in MEASURES.get(table, []):
-        lines.extend(_measure_block(name, dax, fmt))
 
     for col, dtype in cols:
         base = dtype.split("(")[0]

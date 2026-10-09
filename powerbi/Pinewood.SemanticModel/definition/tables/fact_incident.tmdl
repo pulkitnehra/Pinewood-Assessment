@@ -1,14 +1,6 @@
 table fact_incident
 	lineageTag: 017861ca-2379-432b-b0f0-6c186eab1c30
 
-	measure Incidents = COUNTROWS(fact_incident)
-		formatString: #,0
-		lineageTag: 1d5a6e9a-a060-496f-9c41-f853115d4f04
-
-	measure 'Incident Rate per 100 Resident-Days' = DIVIDE(COUNTROWS(fact_incident), SUM(fact_resident_month[resident_days])) * 100
-		formatString: 0.00
-		lineageTag: 2b00291e-a236-4c95-ab8c-59004694ce78
-
 	column incident_id
 		dataType: string
 		lineageTag: 509bb87d-0c34-433e-984f-8a36e5375a64

@@ -19,13 +19,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_occupancy_month"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Current Occupancy %"
                 }
               },
-              "queryRef": "fact_occupancy_month.Current Occupancy %",
+              "queryRef": "_Measures.Current Occupancy %",
               "nativeQueryRef": "Current Occupancy %"
             }
           ]

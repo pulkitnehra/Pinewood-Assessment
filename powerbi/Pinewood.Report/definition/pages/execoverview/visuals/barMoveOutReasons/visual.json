@@ -38,13 +38,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_lease"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Move-Outs"
                 }
               },
-              "queryRef": "fact_lease.Move-Outs",
+              "queryRef": "_Measures.Move-Outs",
               "nativeQueryRef": "Move-Outs"
             }
           ]

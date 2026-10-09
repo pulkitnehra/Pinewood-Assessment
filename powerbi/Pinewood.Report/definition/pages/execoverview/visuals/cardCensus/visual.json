@@ -19,13 +19,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_resident_month"
+                      "Entity": "_Measures"
                     }
                   },
                   "Property": "Current Census"
                 }
               },
-              "queryRef": "fact_resident_month.Current Census",
+              "queryRef": "_Measures.Current Census",
               "nativeQueryRef": "Current Census"
             }
           ]

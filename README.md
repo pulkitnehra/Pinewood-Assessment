@@ -193,6 +193,11 @@ Supporting measures: Occupancy %, Census (Active Residents), Current Census
 Incidents, Move-Outs, Reviews, Avg Rating, Labor Hours, Labor Cost, Leads,
 Lead Conversion %.
 
+All 17 measures live in a dedicated **`_Measures` table**
+(`Pinewood.SemanticModel/definition/tables/_Measures.tmdl`), organized into
+display folders (Occupancy, Census, Incidents, Churn, Reputation, Labor,
+Sales) rather than scattered across the fact tables.
+
 Note on opening fresh from git: PBIP stores no data cache, so Desktop shows a
 "Refresh now" banner on first open — click it once and the model loads from
 the Parquet exports.

@@ -12,6 +12,7 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode"]
 
+ref table _Measures
 ref table dim_care_level
 ref table dim_community
 ref table dim_date

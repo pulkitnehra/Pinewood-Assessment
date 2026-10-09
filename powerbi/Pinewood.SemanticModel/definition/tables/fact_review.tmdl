@@ -1,14 +1,6 @@
 table fact_review
 	lineageTag: 77d64ced-26e9-41fb-89fb-5d640c530ea2
 
-	measure Reviews = COUNTROWS(fact_review)
-		formatString: #,0
-		lineageTag: f5925357-659f-4eb9-b9c1-7edbc6405901
-
-	measure 'Avg Rating' = AVERAGE(fact_review[rating])
-		formatString: 0.00
-		lineageTag: f2b3cbd0-dba6-4b05-9fd8-15a38bd429c5
-
 	column review_id
 		dataType: string
 		lineageTag: d7cff666-35a5-45d1-b7bf-1740c90d7253

@@ -1,0 +1,137 @@
+table _Measures
+	lineageTag: 93e9b4c7-22c6-49e3-bc60-811201e533da
+
+	measure Incidents = COUNTROWS(fact_incident)
+		formatString: #,0
+		displayFolder: Incidents
+		lineageTag: 1d5a6e9a-a060-496f-9c41-f853115d4f04
+
+	measure 'Incident Rate per 100 Resident-Days' = DIVIDE(COUNTROWS(fact_incident), SUM(fact_resident_month[resident_days])) * 100
+		formatString: 0.00
+		displayFolder: Incidents
+		lineageTag: 2b00291e-a236-4c95-ab8c-59004694ce78
+
+	measure Leads = COUNTROWS(fact_lead)
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: b13876c1-963a-49c7-a113-c3f0a276e1bf
+
+	measure 'Lead Conversion %' = DIVIDE(CALCULATE(COUNTROWS(fact_lead), fact_lead[status] = "Won"), COUNTROWS(fact_lead))
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: 5e16aa5d-aa46-4369-83b4-e90b4d42325b
+
+	measure Move-Outs = CALCULATE(COUNTROWS(fact_lease), fact_lease[move_out_date] <> BLANK())
+		formatString: #,0
+		displayFolder: Churn
+		lineageTag: 25288241-75aa-4199-9044-903e9d0aa46b
+
+	measure 'Move-Out Rate % (Trailing 90D)' =
+			VAR WindowEnd =
+			    CALCULATE(EOMONTH(MAX(fact_resident_month[month_start]), 0), REMOVEFILTERS())
+			VAR WindowStart = WindowEnd - 89
+			VAR MoveOuts90 =
+			    CALCULATE(
+			        COUNTROWS(fact_lease),
+			        REMOVEFILTERS(dim_date),
+			        fact_lease[move_out_date] >= WindowStart,
+			        fact_lease[move_out_date] <= WindowEnd
+			    )
+			VAR ResidentsInWindow =
+			    CALCULATE(
+			        DISTINCTCOUNT(fact_resident_month[resident_id]),
+			        REMOVEFILTERS(dim_date),
+			        fact_resident_month[month_start] >= DATE(YEAR(WindowStart), MONTH(WindowStart), 1)
+			    )
+			RETURN
+			    DIVIDE(MoveOuts90, ResidentsInWindow)
+		formatString: 0.0%
+		displayFolder: Churn
+		lineageTag: 93f1d407-f4be-45d3-a5ff-038a4bcf27bb
+
+	measure 'Occupancy %' = DIVIDE(SUM(fact_occupancy_month[resident_days]), SUM(fact_occupancy_month[available_unit_days]))
+		formatString: 0.0%
+		displayFolder: Occupancy
+		lineageTag: 2b3274be-2453-4f2d-b2bb-65a4949ae6ed
+
+	measure 'Current Occupancy %' =
+			VAR LatestMonth =
+			    CALCULATE(MAX(fact_occupancy_month[month_start]), REMOVEFILTERS())
+			RETURN
+			    CALCULATE(
+			        [Occupancy %],
+			        REMOVEFILTERS(dim_date),
+			        fact_occupancy_month[month_start] = LatestMonth
+			    )
+		formatString: 0.0%
+		displayFolder: Occupancy
+		lineageTag: 1130ad1e-c2e2-4fa2-9e6d-096c2f94679a
+
+	measure 'Occupancy % Prior Month' = CALCULATE([Occupancy %], DATEADD(dim_date[date_key], -1, MONTH))
+		formatString: 0.0%
+		displayFolder: Occupancy
+		lineageTag: 2fd5e0a6-f56f-4b7c-a633-9c9fc6b8fb09
+
+	measure 'Occupancy % MoM Delta' = [Occupancy %] - [Occupancy % Prior Month]
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Occupancy
+		lineageTag: de850acc-bed8-47e7-84fa-40c3e9289adc
+
+	measure 'Census (Active Residents)' = DISTINCTCOUNT(fact_resident_month[resident_id])
+		formatString: #,0
+		displayFolder: Census
+		lineageTag: 7b19c49c-d840-4ca9-a571-79ccec46696f
+
+	measure 'Current Census' =
+			VAR LatestMonth =
+			    CALCULATE(MAX(fact_resident_month[month_start]), REMOVEFILTERS())
+			RETURN
+			    CALCULATE(
+			        DISTINCTCOUNT(fact_resident_month[resident_id]),
+			        REMOVEFILTERS(dim_date),
+			        fact_resident_month[month_start] = LatestMonth
+			    )
+		formatString: #,0
+		displayFolder: Census
+		lineageTag: 97c1504b-0c31-4f3a-aca9-3865f2500ac7
+
+	measure 'Resident Days' = SUM(fact_resident_month[resident_days])
+		formatString: #,0
+		displayFolder: Census
+		lineageTag: 22550949-f9ed-4cc0-906e-50585b84fe70
+
+	measure Reviews = COUNTROWS(fact_review)
+		formatString: #,0
+		displayFolder: Reputation
+		lineageTag: f5925357-659f-4eb9-b9c1-7edbc6405901
+
+	measure 'Avg Rating' = AVERAGE(fact_review[rating])
+		formatString: 0.00
+		displayFolder: Reputation
+		lineageTag: f2b3cbd0-dba6-4b05-9fd8-15a38bd429c5
+
+	measure 'Labor Hours' = SUM(fact_shift[hours_worked])
+		formatString: #,0
+		displayFolder: Labor
+		lineageTag: fecedb17-c2a0-43b4-aa66-927d25bc1884
+
+	measure 'Labor Cost' = SUM(fact_shift[labor_cost])
+		formatString: \$#,0
+		displayFolder: Labor
+		lineageTag: f2c4e12f-ae36-40e1-a25e-ac9567167bab
+
+	column Value
+		dataType: string
+		isHidden
+		lineageTag: f1d96d8d-9ec5-47b9-b3b0-3e17b04b70fc
+		summarizeBy: none
+		sourceColumn: Value
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [Value = text], {})
+				in
+				    Source
+
