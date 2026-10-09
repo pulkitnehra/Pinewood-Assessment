@@ -6,13 +6,12 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["dim_care_level","dim_community","dim_date","dim_resident","dim_unit","fact_care_level_change","fact_incident","fact_lead","fact_lease","fact_occupancy_month","fact_resident_month","fact_review","fact_shift","GoldFolder"]
+annotation PBI_QueryOrder = ["dim_care_level","dim_community","dim_date","dim_resident","dim_unit","fact_care_level_change","fact_incident","fact_lead","fact_lease","fact_occupancy_month","fact_resident_month","fact_review","fact_shift","GoldFolder","_Measures"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table _Measures
 ref table dim_care_level
 ref table dim_community
 ref table dim_date
@@ -31,6 +30,7 @@ ref table LocalDateTable_96b780a6-1985-4109-a197-b1aa17362e04
 ref table LocalDateTable_a5583fa8-2465-4f3a-8361-084707997fb8
 ref table LocalDateTable_1470bd4b-68a7-4086-aa6e-adb3429b9d25
 ref table LocalDateTable_e10b5b03-dc51-4187-a794-c29aadf47267
+ref table _Measures
 
 ref role 'Regional Director'
 ref role 'Community Executive Director'

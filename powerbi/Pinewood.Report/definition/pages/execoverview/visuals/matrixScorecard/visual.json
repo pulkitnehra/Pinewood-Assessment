@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "matrixScorecard",
   "position": {
-    "x": 640.3758073987082,
-    "y": 430.3531582920896,
+    "x": 640.37580739870816,
+    "y": 430.35315829208957,
     "z": 0,
     "height": 290,
     "width": 630
